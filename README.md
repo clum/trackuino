@@ -1,5 +1,7 @@
 ![Banner](https://github.com/trackuino/trackuino/wiki/img/trackuino-banner-narrow.png)
 
+This is Christopher Lum's fork of the Trackduino project.
+
 This is the firmware for Trackuino, an open-source APRS tracker based on the Arduino platform. It was designed primarily to track high altitude balloons, so it has other handy features like reading temperature sensors and a buzzer for acoustic location.
 
 Trackuino is intended for use by licensed radio amateurs.

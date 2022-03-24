@@ -15,6 +15,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+/*
+Version History
+03/21/22: Started modifications
+03/23/22: Position transmission via HX1 is working.  Able to consume packets via Direwolf.  Something seems off with temperature measurements.
+*/
+
 // Mpide 22 fails to compile Arduino code because it stupidly defines ARDUINO 
 // as an empty macro (hence the +0 hack). UNO32 builds are fine. Just use the
 // real Arduino IDE for Arduino builds. Optionally complain to the Mpide
@@ -58,30 +64,29 @@ static const uint32_t VALID_POS_TIMEOUT = 2000;  // ms
 // Module variables
 static int32_t next_aprs = 0;
 
-
 void setup()
 {
   pinMode(LED_PIN, OUTPUT);
   pin_write(LED_PIN, LOW);
 
   Serial.begin(GPS_BAUDRATE);
-#ifdef DEBUG_RESET
-  Serial.println("RESET");
-#endif
+  #ifdef DEBUG_RESET
+    Serial.println("RESET");
+  #endif
 
   buzzer_setup();
   afsk_setup();
   gps_setup();
   sensors_setup();
 
-#ifdef DEBUG_SENS
-  Serial.print("Ti=");
-  Serial.print(sensors_int_lm60());
-  Serial.print(", Te=");
-  Serial.print(sensors_ext_lm60());
-  Serial.print(", Vin=");
-  Serial.println(sensors_vin());
-#endif
+  #ifdef DEBUG_SENS
+    Serial.print("Ti=");
+    Serial.print(sensors_int_lm60());
+    Serial.print(", Te=");
+    Serial.print(sensors_ext_lm60());
+    Serial.print(", Vin=");
+    Serial.println(sensors_vin());
+  #endif
 
   // Do not start until we get a valid time reference
   // for slotted transmissions.
@@ -107,9 +112,9 @@ void get_pos()
   int valid_pos = 0;
   uint32_t timeout = millis();
 
-#ifdef DEBUG_GPS
-  Serial.println("\nget_pos()");
-#endif
+  #ifdef DEBUG_GPS
+    Serial.println("\nget_pos()");
+  #endif
 
   gps_reset_parser();
 
@@ -117,7 +122,7 @@ void get_pos()
     if (Serial.available())
       valid_pos = gps_decode(Serial.read());
   } while ( (millis() - timeout < VALID_POS_TIMEOUT) && ! valid_pos) ;
-
+   
   if (valid_pos) {
     if (gps_altitude > BUZZER_ALTITUDE) {
       buzzer_off();   // In space, no one can hear you buzz
@@ -138,10 +143,10 @@ void loop()
       power_save();
     }
 
-#ifdef DEBUG_MODEM
-    // Show modem ISR stats from the previous transmission
-    afsk_debug();
-#endif
+  #ifdef DEBUG_MODEM
+      // Show modem ISR stats from the previous transmission
+      afsk_debug();
+  #endif
 
   } else {
     // Discard GPS data received during sleep window

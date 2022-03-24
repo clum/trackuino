@@ -83,7 +83,7 @@
 // 00:02:00, etc. and the second balloon will transmit at 00:00:30, 00:01:30,
 // 00:02:30, etc.
 #define APRS_SLOT     0     // seconds. -1 disables slotted transmissions
-#define APRS_PERIOD   60    // seconds
+#define APRS_PERIOD   5    // seconds
 
 // GPS baud rate (in bits per second). This is also the baud rate at which
 // debug data will be printed out the serial port.
@@ -165,7 +165,7 @@
 
 // Type of buzzer (0=active, 1=passive). An active buzzer is driven by a
 // DC voltage. A passive buzzer needs a PWM signal.
-#define BUZZER_TYPE             0
+#define BUZZER_TYPE             1
 
 // When using a passive buzzer, specify the PWM frequency here. Choose one
 // that maximizes the volume according to the buzzer's datasheet. Not all
@@ -223,4 +223,3 @@
 
 
 #endif
-

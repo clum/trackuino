@@ -1,0 +1,6 @@
+chan,utime,isotime,source,heard,level,error,dti,name,symbol,latitude,longitude,speed,course,altitude,frequency,offset,tone,system,status,telemetry,comment
+0,1648102512,2022-03-24T06:15:12Z,KG7QEC-11,KG7QEC-11,30(12/5),0,/,KG7QEC-11,/O,47.607667,-122.540667,0.0,0.0,65.2,,,,"Generic, (obsolete. Digis should use APNxxx instead)",,,/Ti=107/Te=107/V=4445 BISEA
+0,1648102517,2022-03-24T06:15:17Z,KG7QEC-11,KG7QEC-11,30(11/5),0,/,KG7QEC-11,/O,47.607667,-122.540667,0.0,0.0,66.4,,,,"Generic, (obsolete. Digis should use APNxxx instead)",,,/Ti=107/Te=107/V=4445 BISEA
+0,1648102522,2022-03-24T06:15:22Z,KG7QEC-11,KG7QEC-11,34(12/5),0,/,KG7QEC-11,/O,47.607667,-122.540667,0.0,0.0,66.4,,,,"Generic, (obsolete. Digis should use APNxxx instead)",,,/Ti=107/Te=107/V=4445 BISEA
+0,1648102527,2022-03-24T06:15:27Z,KG7QEC-11,KG7QEC-11,31(12/5),0,/,KG7QEC-11,/O,47.607667,-122.540667,0.0,0.0,65.5,,,,"Generic, (obsolete. Digis should use APNxxx instead)",,,/Ti=107/Te=107/V=4445 BISEA
+0,1648102532,2022-03-24T06:15:32Z,KG7QEC-11,KG7QEC-11,31(12/5),0,/,KG7QEC-11,/O,47.607667,-122.540667,0.0,0.0,65.8,,,,"Generic, (obsolete. Digis should use APNxxx instead)",,,/Ti=107/Te=107/V=4425 BISEA

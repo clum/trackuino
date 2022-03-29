@@ -5,6 +5,7 @@
 
 %Version History
 %03/25/22: Created
+%03/27/22: Added altitude profile
 
 clear
 clc
@@ -13,23 +14,25 @@ close all
 tic
 
 %% User selections
-% logFile = '.\logs\22_03_23\2022-03-24.log';
-logFile = '.\logs\22_03_23\2022-03-24_edited.log';
+logFile = '.\logs\22_03_23\2022-03-28.log';
+logFile = '.\logs\2022-03-29.log';
+% logFile = '.\logs\22_03_23\2022-03-24_edited.log';
 
 %% Load data
-% [data,headers] = LoadNumericCSVWithHeader(logFile);
-% headers
-
-% xlsread(logFile)
-
-% T = readtable(logFile,'NumHeaderLines',1)
 T = readtable(logFile);
 
 %Get lat and lon
 lat_deg = T.latitude;
 lon_deg = T.longitude;
+altitude_m = T.altitude;
 
 %% Plot using variuos geoplotting functions
+figureTJ
+plot(altitude_m)
+grid on
+xlabel("Sample number")
+ylabel('Altitude (m)')
+
 figure;
 geoplot(lat_deg(1),lon_deg(1),'ro','LineWidth',2);
 hold on

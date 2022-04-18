@@ -19,6 +19,8 @@
 Version History
 03/21/22: Started modifications
 03/23/22: Position transmission via HX1 is working.  Able to consume packets via Direwolf.  Something seems off with temperature measurements.
+03/27/22: Changed to interface with DS18B20 temperature sensors.  Can't seem to make this work via the APRS packet.
+04/17/22: Confirmed to work.
 */
 
 // Mpide 22 fails to compile Arduino code because it stupidly defines ARDUINO 
@@ -58,6 +60,20 @@ Version History
 #  include <WProgram.h>
 #endif
 
+//----------------------------
+//DS18B20
+#include <OneWire.h>
+#include <DallasTemperature.h>
+#define ONE_WIRE_BUS 2
+
+// Setup a oneWire instance to communicate with any OneWire device
+OneWire oneWire(ONE_WIRE_BUS);  
+
+// Pass oneWire reference to DallasTemperature library
+DallasTemperature sensors(&oneWire);
+//----------------------------
+
+
 // Module constants
 static const uint32_t VALID_POS_TIMEOUT = 2000;  // ms
 
@@ -78,6 +94,9 @@ void setup()
   afsk_setup();
   gps_setup();
   sensors_setup();
+
+  //BISEA: Start up the DallasTemperature sensor library
+  sensors.begin();
 
   #ifdef DEBUG_SENS
     Serial.print("Ti=");

@@ -25,6 +25,7 @@ Version History
 03/27/22: Changed to interface with DS18B20 temperature sensors.  Can't seem to make this work via the APRS packet.
 04/17/22: Confirmed to work.  Still couldn't get temperature sensors to work
 04/18/22: Got temperature sensors working.  It turned out that I used the wrong value resistor for the sensor pullup resistor.
+04/25/22: Changed transmit period to 30 seconds.  For some reason this seemed to cause issues with direwolf.  Changed to 15 seconds
 */
 
 // Mpide 22 fails to compile Arduino code because it stupidly defines ARDUINO 

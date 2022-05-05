@@ -6,9 +6,9 @@
 %Version History
 %03/29/22: Created
 %03/30/22: Broken into two steps
+%04/30/22: Update to diagnostics
 
 clear
-clc
 close all
 
 tic
@@ -17,9 +17,16 @@ tic
 combinedLogFileName = 'Step01a_CombineLogFilesResults.mat';
 outputFileName      = 'Step01b_FilterLogFileResults.mat';
 
-filterResults       = false;
+filterResults       = true;
 callSign            = 'KG7QEC';
 SSID                = '11';
+
+%% Diagnostics
+if(filterResults)
+    disp(['Filtering results to only include results of call sign and SSID of ',callSign,'-',SSID])
+else
+    disp('Not filtering results')
+end
 
 %% Load data
 temp = load(combinedLogFileName);

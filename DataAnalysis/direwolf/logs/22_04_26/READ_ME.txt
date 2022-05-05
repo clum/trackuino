@@ -1,0 +1,1 @@
+The UTC date appears to roll over from 04/26/22 to 04/27/22 which is why there are two log files.

@@ -6,21 +6,22 @@
 %Version History
 %03/29/22: Created
 %03/31/22: Continued working
+%04/26/22: Adding alternative plots
+%04/30/22: Updates to plotting
 
 clear
-clc
 close all
 
 tic
 
 %% User selections
-% filteredLogFileName = 'Step01b_FilterLogFileResults.mat';
-% filteredLogFileName = 'Step01b_FilterLogFileResults_KG7QEC_11.mat';
-filteredLogFileName = 'Step01b_FilterLogFileResults_Unfiltered.mat';
-
-plotType    = 'scatter';     %'trajectory' = connecting lines, 'scatter' = scatter plots
+filteredLogFileName     = 'Step01b_FilterLogFileResults.mat';
+parsedCommentFileName   = 'Step01c_ParsedComments.mat';
+plotType                = 'scatter';     %'trajectory' = connecting lines, 'scatter' = scatter plots
+timeZone                = 'America/Los_Angeles';
 
 %% Load data
+%Load filteredLogFileName
 temp = load(filteredLogFileName);
 T_filtered = temp.T_filtered;
 
@@ -47,13 +48,35 @@ status          = T_filtered.status;
 telemetry       = T_filtered.telemetry;
 comment         = T_filtered.comment;
 
-%% Plot using various geoplotting functions
-figure
-plot(utime,altitude_m)
-grid on
-xlabel('utime')
-ylabel('Altitude (m)')
+%Load parsedCommentFileName
+temp2 = load(parsedCommentFileName);
 
+TA_C    = temp2.TA_C;
+TB_C    = temp2.TB_C;
+V_bits  = temp2.V_bits;
+
+%% Manipulate time stamps
+%Age of last packet
+currentDate     = datetime('now','TimeZone',timeZone);
+firstPacketDate = datetime(utime(1),'ConvertFrom','posixtime','TimeZone',timeZone);
+lastPacketDate  = datetime(utime(end),'ConvertFrom','posixtime','TimeZone',timeZone);
+
+packetAge       = currentDate - lastPacketDate;
+dataDuration    = lastPacketDate - firstPacketDate;
+
+disp('Last packet received at')
+disp(lastPacketDate)
+
+disp('Last packet age (HH:MM:SS)')
+disp(packetAge)
+
+disp('Duration of data set (HH:MM:SS)')
+disp(dataDuration)
+
+%Convert time
+utimePacific = datetime(utime,'ConvertFrom','posixtime','TimeZone',timeZone);
+
+%% Plot using various geoplotting functions
 figure;
 switch plotType
     case 'trajectory'
@@ -77,6 +100,42 @@ switch plotType
         error('Unsupported plotType')
 end
 title('Direwolf Data')
+
+figure
+ax = [];
+ax(end+1) = subplot(6,1,1);
+plot(utimePacific,MetersPerSecToMPH(speed_mps))
+grid on
+ylabel('Speed (MPH)')
+
+ax(end+1) = subplot(6,1,2);
+plot(utimePacific,rad2deg(course_rad))
+grid on
+ylabel('Course (deg)')
+
+ax(end+1) = subplot(6,1,3);
+plot(utimePacific,MtoFt(altitude_m))
+grid on
+ylabel('Altitude (ft)')
+
+ax(end+1) = subplot(6,1,4);
+plot(utimePacific,CelciustoFarenheit(TA_C))
+grid on
+ylabel('T_A (F)')
+
+ax(end+1) = subplot(6,1,5);
+plot(utimePacific,CelciustoFarenheit(TB_C))
+grid on
+ylabel('T_B (F)')
+
+ax(end+1) = subplot(6,1,6);
+plot(utimePacific,V_bits)
+grid on
+xlabel('utime')
+ylabel('V (bits)')
+
+linkaxes(ax,'x')
+
 
 toc
 disp('DONE!')

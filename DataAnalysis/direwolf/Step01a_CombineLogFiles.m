@@ -14,10 +14,37 @@ close all
 tic
 
 %% User selections
+% logFiles = {
+%     '.\logs\22_03_28\2022-03-28.log'
+%     '.\logs\22_03_28\2022-03-29.log'
+%     };
+
+% %HX1_01
+% logFiles = {
+%     '.\logs\22_04_26\2022-04-26.log'
+%     '.\logs\22_04_26\2022-04-27.log'
+%     };
+
+% %HX1_02
+% logFiles = {
+%     '.\logs\22_04_27\2022-04-27.log'
+%     '.\logs\22_04_27\2022-04-28.log'
+%     };
+
+% %HX1_03
+% logFiles = {
+%     '.\logs\22_04_30_HX1_03\2022-04-30.log'
+%     };
+
+%HX1_03_edited
 logFiles = {
-    '.\logs\22_03_28\2022-03-28.log'
-    '.\logs\22_03_28\2022-03-29.log'
+    '.\logs\22_04_30_edited\2022-04-30.log'
     };
+
+% %HX1_04
+% logFiles = {
+%     '.\logs\22_04_30_HX1_04\2022-05-01.log'
+%     };
 
 outputFileName = 'Step01a_CombineLogFilesResults.mat';
 
@@ -67,6 +94,7 @@ T.Properties.VariableNames = {
     'comment'
     };
 
+disp('Summary of table T')
 summary(T)
 
 %% Save data

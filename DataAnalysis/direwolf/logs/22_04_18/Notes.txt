@@ -1,0 +1,1 @@
+Trackduino system successfully read temperature sensors.  Took last data point around 6:16pm pacific time.

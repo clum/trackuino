@@ -29,6 +29,10 @@
 #  include <WProgram.h>
 #endif
 
+//Update: extern sensor
+#include <DallasTemperature.h>
+extern DallasTemperature sensors;
+
 // Module functions
 float meters_to_feet(float m)
 {
@@ -68,12 +72,39 @@ void aprs_send()
   ax25_send_string("/A=");            // Altitude (feet). Goes anywhere in the comment area
   snprintf(temp, 7, "%06ld", (long)(meters_to_feet(gps_altitude) + 0.5));
   ax25_send_string(temp);
-  ax25_send_string("/Ti=");
-  snprintf(temp, 6, "%d", sensors_int_lm60());
-  ax25_send_string(temp);
-  ax25_send_string("/Te=");
-  snprintf(temp, 6, "%d", sensors_ext_lm60());
-  ax25_send_string(temp);
+  //ax25_send_string("/Ti=");
+  //snprintf(temp, 6, "%d", sensors_int_lm60());
+  //ax25_send_string(temp);
+  //ax25_send_string("/Te=");
+  //snprintf(temp, 6, "%d", sensors_ext_lm60());
+  //ax25_send_string(temp);
+
+  //Update: Use DS18B20 temperature sensors
+  sensors.requestTemperatures(); 
+
+  //temperature
+  float temperatureA_c = sensors.getTempCByIndex(0);
+  float temperatureB_c = sensors.getTempCByIndex(1);
+
+  char comma[2] = ",";
+  
+  uint8_t minWidth = 9;
+  uint8_t precision = 5;
+  
+  char str_temperatureA_c[8];
+  minWidth = 4;
+  precision = 2;
+  dtostrf(temperatureA_c,minWidth,precision,str_temperatureA_c);
+  ax25_send_string("/TA=");
+  ax25_send_string(str_temperatureA_c);
+  
+  char str_temperatureB_c[8];
+  minWidth = 4;
+  precision = 2;
+  dtostrf(temperatureB_c,minWidth,precision,str_temperatureB_c);
+  ax25_send_string("/TB=");
+  ax25_send_string(str_temperatureB_c);
+  
   ax25_send_string("/V=");
   snprintf(temp, 6, "%d", sensors_vin());
   ax25_send_string(temp);

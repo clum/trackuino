@@ -16,9 +16,16 @@
  */
 
 /*
+Christopher Lum Notes
+---------------------
+
 Version History
 03/21/22: Started modifications
 03/23/22: Position transmission via HX1 is working.  Able to consume packets via Direwolf.  Something seems off with temperature measurements.
+03/27/22: Changed to interface with DS18B20 temperature sensors.  Can't seem to make this work via the APRS packet.
+04/17/22: Confirmed to work.  Still couldn't get temperature sensors to work
+04/18/22: Got temperature sensors working.  It turned out that I used the wrong value resistor for the sensor pullup resistor.
+04/25/22: Changed transmit period to 30 seconds.  For some reason this seemed to cause issues with direwolf.  Changed to 15 seconds
 */
 
 // Mpide 22 fails to compile Arduino code because it stupidly defines ARDUINO 
@@ -58,6 +65,20 @@ Version History
 #  include <WProgram.h>
 #endif
 
+//----------------------------
+//DS18B20
+#include <OneWire.h>
+#include <DallasTemperature.h>
+#define ONE_WIRE_BUS 2
+
+// Setup a oneWire instance to communicate with any OneWire device
+OneWire oneWire(ONE_WIRE_BUS);  
+
+// Pass oneWire reference to DallasTemperature library
+DallasTemperature sensors(&oneWire);
+//----------------------------
+
+
 // Module constants
 static const uint32_t VALID_POS_TIMEOUT = 2000;  // ms
 
@@ -79,11 +100,20 @@ void setup()
   gps_setup();
   sensors_setup();
 
+  //BISEA: Start up the DallasTemperature sensor library
+  sensors.begin();
+
   #ifdef DEBUG_SENS
-    Serial.print("Ti=");
-    Serial.print(sensors_int_lm60());
-    Serial.print(", Te=");
-    Serial.print(sensors_ext_lm60());
+    sensors.requestTemperatures(); 
+    float temperatureA_c = sensors.getTempCByIndex(0);
+    float temperatureB_c = sensors.getTempCByIndex(1);
+  
+    Serial.print(", TA=");
+    Serial.print(temperatureA_c);
+
+    Serial.print(", TB=");
+    Serial.print(temperatureB_c);
+    
     Serial.print(", Vin=");
     Serial.println(sensors_vin());
   #endif
@@ -146,6 +176,21 @@ void loop()
   #ifdef DEBUG_MODEM
       // Show modem ISR stats from the previous transmission
       afsk_debug();
+  #endif
+
+  #ifdef DEBUG_SENS
+    sensors.requestTemperatures(); 
+    float temperatureA_c = sensors.getTempCByIndex(0);
+    float temperatureB_c = sensors.getTempCByIndex(1);
+  
+    Serial.print(", TA=");
+    Serial.print(temperatureA_c);
+
+    Serial.print(", TB=");
+    Serial.print(temperatureB_c);
+    
+    Serial.print(", Vin=");
+    Serial.println(sensors_vin());
   #endif
 
   } else {

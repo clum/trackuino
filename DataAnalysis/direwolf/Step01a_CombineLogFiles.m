@@ -36,15 +36,20 @@ tic
 %     '.\logs\22_04_30_HX1_03\2022-04-30.log'
 %     };
 
-%HX1_03_edited
-logFiles = {
-    '.\logs\22_04_30_edited\2022-04-30.log'
-    };
+% %HX1_03_edited
+% logFiles = {
+%     '.\logs\22_04_30_edited\2022-04-30.log'
+%     };
 
 % %HX1_04
 % logFiles = {
 %     '.\logs\22_04_30_HX1_04\2022-05-01.log'
 %     };
+
+%HX1_05
+logFiles = {
+    '.\logs\22_05_06_HX1_05\2022-05-06.log'
+    };
 
 outputFileName = 'Step01a_CombineLogFilesResults.mat';
 

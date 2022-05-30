@@ -1,4 +1,4 @@
-%Process a log file by filtering for a specific call sign
+%Plot results
 %
 %Christopher Lum
 %lum@uw.edu
@@ -8,6 +8,8 @@
 %03/31/22: Continued working
 %04/26/22: Adding alternative plots
 %04/30/22: Updates to plotting
+%05/09/22: Adding battery limits
+%05/21/22: Updated documentation
 
 clear
 close all
@@ -17,7 +19,7 @@ tic
 %% User selections
 filteredLogFileName     = 'Step01b_FilterLogFileResults.mat';
 parsedCommentFileName   = 'Step01c_ParsedComments.mat';
-plotType                = 'scatter';     %'trajectory' = connecting lines, 'scatter' = scatter plots
+plotType                = 'trajectory';     %'trajectory' = connecting lines, 'scatter' = scatter plots
 timeZone                = 'America/Los_Angeles';
 
 %% Load data
@@ -129,7 +131,10 @@ grid on
 ylabel('T_B (F)')
 
 ax(end+1) = subplot(6,1,6);
+hold on
 plot(utimePacific,V_bits)
+plot(utimePacific,7500*ones(size(utimePacific)),'g--','LineWidth',2)
+plot(utimePacific,6470*ones(size(utimePacific)),'r--','LineWidth',2)
 grid on
 xlabel('utime')
 ylabel('V (bits)')

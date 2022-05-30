@@ -46,10 +46,30 @@ tic
 %     '.\logs\22_04_30_HX1_04\2022-05-01.log'
 %     };
 
-%HX1_05
+% %HX1_05
+% logFiles = {
+%     '.\logs\22_05_06_HX1_05\2022-05-06.log'
+%     };
+
+% %HX1_06
+% logFiles = {
+%     '.\logs\22_05_09_HX1_06\2022-05-10.log'
+%     };
+
+% %HX1_07
+% logFiles = {
+%     '.\logs\22_05_25_HX1_07\2022-05-25.log'
+%     };
+
+% %Space Shrimp
+% logFiles = {
+%     '.\logs\22_05_28_SpaceShrimp\2022-05-28.log'
+%     };
+
 logFiles = {
-    '.\logs\22_05_06_HX1_05\2022-05-06.log'
+    '.\logs\22_05_28_SpaceShrimp\Book5.csv'
     };
+
 
 outputFileName = 'Step01a_CombineLogFilesResults.mat';
 
